@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2>Register for Family CHATroom</h2>
+
+            <!-- Register Form -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    Register
+                </div>
+                <div class="card-body">
+                    <form action="{{ url_for('register') }}" method="post">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <button type="submit" class="btn btn-secondary btn-lg btn-block">Register</button>
+                    </form>
+                    <!-- Back to Home button (on the right side) -->
+                    <div class="text-right mt-3 ml-auto">
+                        <a href="{{ url_for('home') }}" class="btn btn-secondary">Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

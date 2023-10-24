@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Header Section -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="mb-2">
+        <p>You are logged in as <strong>{{ username }}</strong></p>
+    </div>
+    <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+</div>
+
+<!-- Centered Title -->
+<div class="text-center">
+    <h2>Family CHATroom</h2>
+</div>
+
+<!-- Display messages -->
+<div id="message-display" class="border rounded" style="height: 300px; overflow-y: scroll;">
+    {% for message in recent_messages|reverse %}
+    <p>
+        <strong>{% if message.author.username == username %}me{% else %}{{ message.author.username }}{% endif %}</strong> ({{ message.timestamp.strftime('%Y-%m-%d %H:%M:') }}): {{ message.content }}
+    </p>
+    {% endfor %}
+</div>
+
+<!-- Send messages -->
+<form id="message-form" class="mt-3">
+    <textarea id="message-content" class="form-control mb-2" placeholder="Type your message..." rows="3"></textarea>
+    <button type="button" class="btn btn-dark btn-lg btn-block mb-3" onclick="sendMessage()">Send</button>
+</form>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+<script>
+    const socket = io('/');
+
+    window.onload = function() {
+        const messageBox = document.getElementById('message-display');
+        messageBox.scrollTop = messageBox.scrollHeight;
+    }
+
+    // Listen for the 'receive_message' event and append the message to the chatbox
+    socket.on('receive_message', function(data) {
+        const messageBox = document.getElementById('message-display');
+        const newMessage = document.createElement('p');
+        
+        // Determine whether to display "Me" or the sender's username
+        const sender = (data.user_id === "{{ username }}") ? "me" : data.user_id;
+        
+        newMessage.innerHTML = `<strong>${sender}</strong> (${data.timestamp}): ${data.message}`;
+        messageBox.appendChild(newMessage);
+        // Scroll to the bottom to see the newest message
+        messageBox.scrollTop = messageBox.scrollHeight;
+    });
+
+    // Send message to server
+    function sendMessage() {
+        const messageContent = document.getElementById('message-content').value;
+        if (messageContent) {
+            socket.emit('send_message', { message: messageContent }); 
+            document.getElementById('message-content').value = '';
+        }
+    }
+</script>
+
+
+
+
+{% endblock %}
