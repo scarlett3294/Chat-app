@@ -8,6 +8,8 @@
 - **helpers.py**: This file contains helper functions related to user registration and checking if a username is already registered.
 - **model.py**: This file defines the data models for the application using SQLAlchemy. It defines two models: User and Message.
 - **database.py**: This file is responsible for initializing the database using Flask-SQLAlchemy. It sets up the SQLAlchemy object db and provides a function initialize_database(app) to create the necessary database tables.
+- **templates**: This folder contains HTML templates used to render the web pages.
+
 ## Design Choices
 I chose to implement a name-based login system to prioritize ease of use, especially for family members who may not be tech-savvy. This eliminates the need for complex usernames and passwords, simplifying the login process.
 
