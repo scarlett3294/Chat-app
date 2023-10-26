@@ -28,5 +28,5 @@ I chose to implement a name-based login system to prioritize ease of use, especi
 #### 5. To run the app for real-time messaging, use the following command: flask run --host=0.0.0.0
   This command enables real-time messaging across different devices.
 #### Visit http://< your-ip >:5000 in your web browser to access the application (computer/ phone)
-#### Replace <your-ip> with your server's IP address.
+#### Replace < your-ip > with your server's IP address.
 #### To deactivate the virtual environment when you're done, simply run: deactivate
